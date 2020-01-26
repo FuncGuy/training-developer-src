@@ -22,6 +22,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_METRIC_REPORTERS: "io.confluent.metrics.reporter.ConfluentMetricsReporter"
       CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: "kafka:9092"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
 
   producer1:
     image: cnfltraining/java-producer-avro:1.0
