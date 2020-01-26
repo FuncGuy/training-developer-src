@@ -166,6 +166,7 @@ services:
       KSQL_BOOTSTRAP_SERVERS: "kafka:9092"
       KSQL_HOST_NAME: ksql-server
       KSQL_APPLICATION_ID: "dev-class"
+      KSQL_KSQL_CONNECT_URL: http://connect:8083/
       KSQL_LISTENERS: "http://0.0.0.0:8088"
       KSQL_CACHE_MAX_BYTES_BUFFERING: 0
       KSQL_KSQL_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
@@ -232,45 +233,12 @@ services:
                        cub kafka-ready -b kafka:9092 1 300 && \
                        echo Creating topics... && \
                        kafka-topics --bootstrap-server kafka:9092 --create --topic driver-positions --partitions 3 --replication-factor 1 && \
-                       kafka-topics --bootstrap-server kafka:9092 --create --topic driver-avro --partitions 3 --replication-factor 1 --config cleanup.policy=compact && \
+                       kafka-topics --bootstrap-server kafka:9092 --create --topic driver-profiles-avro --partitions 3 --replication-factor 1 --config cleanup.policy=compact && \
+                       kafka-topics --bootstrap-server kafka:9092 --create --topic driver-profiles-ksqlavro --partitions 3 --replication-factor 1 --config cleanup.policy=compact && \
                        kafka-topics --bootstrap-server kafka:9092 --create --topic driver-positions-avro --partitions 3 --replication-factor 1 && \
                        kafka-topics --bootstrap-server kafka:9092 --create --topic driver-distance-avro --partitions 3 --replication-factor 1 && \
                        kafka-topics --bootstrap-server kafka:9092 --create --topic driver-augmented-avro --partitions 3 --replication-factor 1'"
 
-  create-connector:
-    image: confluentinc/cp-enterprise-kafka:5.4.0
-    container_name: create-connector
-    command:
-      - bash
-      - -c 
-      - |
-        until curl -fsSL http://connect:8083/ ; do
-          sleep 1
-          echo waiting for connect
-        done
-        curl -s -X POST -H "Content-Type: application/json" --data '{
-            "name": "Driver-Connector",
-            "config": {
-                "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
-                "connection.url": "jdbc:postgresql://postgres:5432/postgres",
-                "connection.user": "postgres",
-                "table.whitelist": "driver",
-                "topic.prefix": "",
-                "mode":"timestamp+incrementing",
-                "incrementing.column.name": "id",
-                "timestamp.column.name": "timestamp",
-                "table.types": "TABLE",
-                "numeric.mapping": "best_fit",
-                "transforms": "suffix,createKey,extractKey",
-                "transforms.suffix.type":"org.apache.kafka.connect.transforms.RegexRouter",
-                "transforms.suffix.regex":"(.*)",
-                "transforms.suffix.replacement":"$$1-avro",
-                "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-                "transforms.createKey.fields": "driverkey",
-                "transforms.extractKey.type": "org.apache.kafka.connect.transforms.ExtractField$$Key",
-                "transforms.extractKey.field": "driverkey"
-            }
-        }' http://connect:8083/connectors
 
   # tools:
   #   image: cnfltraining/training-tools:5.4
