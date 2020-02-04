@@ -10,7 +10,6 @@ cat << EOF >> /etc/hosts
 127.0.0.1 zookeeper
 127.0.0.1 schema-registry
 127.0.0.1 connect
-127.0.0.1 ksql-server
 127.0.0.1 ksqldb-server
 127.0.0.1 postgres
 EOF
