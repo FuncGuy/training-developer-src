@@ -99,7 +99,7 @@ services:
       - 3002:3000
     environment:
       TOPIC: driver-positions-avro
-    command: "bash -c 'until curl -fsSL schema-registry:8081/subjects/driver-positions-avro-value/versions/1 | grep schema ; \
+    command: "bash -c 'until curl -fsSL schema-registry:8081/subjects/ | grep driver-positions-avro-value ; \
                       do sleep 1; \
                       echo waiting for schema; \
                       done; \
@@ -113,7 +113,7 @@ services:
       - 3012:3000
     environment:
       TOPIC: driver-positions-pyavro
-    command: "bash -c 'until curl -fsSL schema-registry:8081/subjects/driver-positions-pyavro-value/versions/1 | grep schema ; \
+    command: "bash -c 'until curl -fsSL schema-registry:8081/subjects/ | grep driver-positions-pyavro-value ; \
                       do sleep 1; \
                       echo waiting for schema; \
                       done; \
@@ -127,7 +127,7 @@ services:
       - 3003:3000
     environment:
       TOPIC: driver-distance-avro
-    command: "bash -c 'until curl -fsSL schema-registry:8081/subjects/driver-distance-avro-value/versions/1 | grep schema ; \
+    command: "bash -c 'until curl -fsSL schema-registry:8081/subjects/ | grep driver-distance-avro-value ; \
                       do sleep 1; \
                       echo waiting for schema; \
                       done; \
@@ -141,7 +141,7 @@ services:
       - 3004:3000
     environment:
       TOPIC: driver-augmented-avro
-    command: "bash -c 'until curl -fsSL schema-registry:8081/subjects/driver-augmented-avro-value/versions/1 | grep schema ; \
+    command: "bash -c 'until curl -fsSL schema-registry:8081/subjects/ | grep driver-augmented-avro-value ; \
                       do sleep 1; \
                       echo waiting for schema; \
                       done; \
@@ -235,6 +235,7 @@ services:
                        cub kafka-ready -b kafka:9092 1 300 && \
                        echo Creating topics... && \
                        kafka-topics --bootstrap-server kafka:9092 --create --topic driver-positions --partitions 3 --replication-factor 1 && \
+                       kafka-topics --bootstrap-server kafka:9092 --create --topic driver-positions-pyavro --partitions 3 --replication-factor 1 && \
                        kafka-topics --bootstrap-server kafka:9092 --create --topic driver-profiles-avro --partitions 3 --replication-factor 1 --config cleanup.policy=compact && \
                        kafka-topics --bootstrap-server kafka:9092 --create --topic driver-profiles-ksqlavro --partitions 3 --replication-factor 1 --config cleanup.policy=compact && \
                        kafka-topics --bootstrap-server kafka:9092 --create --topic driver-positions-avro --partitions 3 --replication-factor 1 && \

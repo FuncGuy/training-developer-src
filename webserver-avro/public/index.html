@@ -83,8 +83,8 @@
       // save the markers representing the drivers
       var driverMarkers = {};
       
-      // configure with wikimedia tile server
-      L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.{ext}', {
+      // configure with tile server
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
        ext: 'png',
        maxZoom: 18,
        attribution: 'Wikimedia maps | Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
