@@ -56,8 +56,9 @@ public class Producer {
       // TODO: populate the message object
       final ProducerRecord<String, String> record = new ProducerRecord<>(KAFKA_TOPIC, key, value);
       // TODO: write the lat/long position to a Kafka topic
+      // TODO: print the key and value in the callback lambda
       producer.send(record, (md, e) -> {
-        System.out.println(String.format("Sent Key:%s Value:%s", key, value));
+        System.out.printf("Sent Key:%s Value:%s\n", key, value);
       });
       Thread.sleep(1000);
       pos = (pos + 1) % rows.length;

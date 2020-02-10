@@ -56,7 +56,10 @@ public class Producer {
       // TODO: populate the message object
       final ProducerRecord<String, String> record = new ProducerRecord<>(???, ???, ???);
       // TODO: write the lat/long position to a Kafka topic
-      producer.send(???
+      // TODO: print the key and value in the callback lambda
+      producer.send(???, (md, e) -> {
+        System.out.println(???
+      });
       Thread.sleep(1000);
       pos = (pos + 1) % rows.length;
     }
