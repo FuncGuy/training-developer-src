@@ -4,7 +4,13 @@ if [ "$HOSTNAME" = tools ]; then
   exit 1
 fi
 
-cat << EOF >> /etc/hosts
+if grep "some entries for docker containers used in DEV" /etc/hosts >/dev/null; then
+  echo "Already done!"
+  exit 0
+fi
+
+sudo cat << EOF | sudo tee -a /etc/hosts >/dev/null
+
 # some entries for docker containers used in DEV
 127.0.0.1 kafka
 127.0.0.1 zookeeper

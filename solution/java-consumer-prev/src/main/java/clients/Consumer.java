@@ -57,7 +57,7 @@ public class Consumer {
         }
 
         // TODO: Request the offsets for the start timestamp
-        final Map<TopicPartition, OffsetAndTimestamp> startOffsets = 
+        final Map<TopicPartition, OffsetAndTimestamp> startOffsets =
             consumer.offsetsForTimes(timestampsToSearch);
         // Seek each partition to the new offset
         for (Map.Entry<TopicPartition, OffsetAndTimestamp> entry : startOffsets.entrySet()) {
