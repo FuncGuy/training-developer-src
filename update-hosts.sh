@@ -9,7 +9,7 @@ if grep "some entries for docker containers used in DEV" /etc/hosts >/dev/null; 
   exit 0
 fi
 
-sudo cat << EOF | sudo tee -a /etc/hosts >/dev/null
+cat << EOF | sudo tee -a /etc/hosts >/dev/null
 
 # some entries for docker containers used in DEV
 127.0.0.1 kafka
