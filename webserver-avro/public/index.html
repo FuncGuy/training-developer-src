@@ -68,7 +68,7 @@
       integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
       crossorigin=""></script>
     <script>
-    var driverColors = ['red', 'orange', 'green', 'blue', 'indigo', 'violet'];
+    var driverColors = ['red', 'green', 'blue', 'indigo', 'violet'];
     // socket.io connection
     const socket = io({
         transports: ['websocket']
@@ -78,8 +78,7 @@
     document.addEventListener('DOMContentLoaded', (event) => {
 
       // create a leaflet map object
-      var mymap = L.map('mapid').setView([47.610664, -122.338917
-                  ], 13);
+      var mymap = L.map('mapid').setView([47.610664, -122.338917], 14);
       // save the markers representing the drivers
       var driverMarkers = {};
       
@@ -87,7 +86,7 @@
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
        ext: 'png',
        maxZoom: 18,
-       attribution: 'Wikimedia maps | Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(mymap);
 
       // when you get a message from the node socket.io server
